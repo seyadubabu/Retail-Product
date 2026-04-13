@@ -34,4 +34,12 @@ class PricingRepositoryImpl {
       throw Exception('No Internet for upload');
     }
   }
+
+  Future<void> updatePricing(String id, Map body) async {
+    if (await network.isConnected) {
+      await remote.updatePricing(id, body);
+    } else {
+      throw Exception('No Internet');
+    }
+  }
 }

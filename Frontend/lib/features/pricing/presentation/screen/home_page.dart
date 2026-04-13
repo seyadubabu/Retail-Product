@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:retail_product/features/pricing/presentation/screen/edit_page.dart';
 
 import '../bloc/pricing_bloc.dart';
 
@@ -83,35 +84,48 @@ class _HomePageState extends State<HomePage> {
 
                           final item = state.data[i];
 
-                          return Card(
-                            margin: const EdgeInsets.all(10),
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(12),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(item['productName'],
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                  const SizedBox(height: 5),
-                                  Text('SKU: ${item['sku']}'),
-                                  Text('Store: ${item['storeId']}'),
-                                  const SizedBox(height: 5),
-                                  Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text('₹ ${item['price']}'),
-                                      Text(item['date']
-                                          .toString()
-                                          .substring(0, 10)),
-                                    ],
-                                  )
-                                ],
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => BlocProvider.value(
+                                    value: context.read<PricingBloc>(),
+                                    child: EditPricingPage(item: item),
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Card(
+                              margin: const EdgeInsets.all(10),
+                              elevation: 3,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(item['productName'],
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    const SizedBox(height: 5),
+                                    Text('SKU: ${item['sku']}'),
+                                    Text('Store: ${item['storeId']}'),
+                                    const SizedBox(height: 5),
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('₹ ${item['price']}'),
+                                        Text(item['date']
+                                            .toString()
+                                            .substring(0, 10)),
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           );

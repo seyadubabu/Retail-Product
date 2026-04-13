@@ -15,6 +15,14 @@ class SearchPricing extends PricingEvent {
 class UploadCSVEvent extends PricingEvent {}
 class UploadCSVFromAssetsEvent extends PricingEvent {}
 
+class UpdatePricingEvent extends PricingEvent {
+  final String id;
+  final Map body;
+
+  UpdatePricingEvent(this.id, this.body);
+}
+
+
 // STATES
 abstract class PricingState {}
 
@@ -48,6 +56,7 @@ class PricingBloc extends Bloc<PricingEvent, PricingState> {
     on<SearchPricing>(_onSearch);
     on<UploadCSVEvent>(_onUploadCSV);
     on<UploadCSVFromAssetsEvent>(_onUploadCSVFromAssets);
+    on<UpdatePricingEvent>(_onUpdate);
   }
 
   Future<void> _onLoad(LoadPricing event, Emitter emit) async {
@@ -105,6 +114,16 @@ class PricingBloc extends Bloc<PricingEvent, PricingState> {
       await repo.uploadCSVFromAssets();
       final data = await repo.getPricing();
       emit(PricingLoaded(data));
+    } catch (e) {
+      emit(PricingError(e.toString()));
+    }
+  }
+
+  Future<void> _onUpdate(
+      UpdatePricingEvent event, Emitter<PricingState> emit) async {
+    try {
+      await repo.updatePricing(event.id, event.body);
+      add(LoadPricing());
     } catch (e) {
       emit(PricingError(e.toString()));
     }
