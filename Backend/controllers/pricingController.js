@@ -9,9 +9,9 @@ exports.uploadCSV = async (req, res) => {
     .pipe(csv())
     .on('data', (data) => {
       results.push({
-        storeId: data['Store ID'],
+        storeId: data['StoreID'],
         sku: data['SKU'],
-        productName: data['Product Name'],
+        productName: data['ProductName'],
         price: parseFloat(data['Price']),
         date: new Date(data['Date'])
       });
