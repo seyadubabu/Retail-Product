@@ -271,3 +271,11 @@ Flutter Developer | 9+ Years Experience
 > “I designed this system with scalability and offline-first capabilities in mind, ensuring it can handle large datasets across multiple stores efficiently.”
 
 ---
+
+## 📐 Screenshots
+
+![Database](docs/retail_pricing_db.png)
+
+![Home Screen](docs/home_screen.png)
+
+![Edit Screen](docs/edit_price.png)
